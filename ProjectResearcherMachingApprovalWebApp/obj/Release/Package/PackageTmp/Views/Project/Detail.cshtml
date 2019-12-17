@@ -1,0 +1,147 @@
+﻿@model IEnumerable<ProjectResearcherMachingApprovalWebApp.Models.ProjectViewModel>
+
+@{
+    ViewBag.Title = "Detail";
+}
+
+<div class="panel panel-default" style="width: 100%; padding: 10px; margin: 10px; margin-left:0px;">
+    <div id="Tabs" role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#project" aria-controls="project" role="tab" data-toggle="tab">
+                    Project
+                </a>
+            </li>
+            <li>
+                <a href="#researcher" aria-controls="researcher" role="tab" data-toggle="tab">
+                    Researcher
+                </a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content" style="width: 100%; padding-top: 20px;">
+            <div role="tabpanel" class="tab-pane active" id="project">
+            </div>
+            <div role="tabpanel" class="tab-pane" id="researcher">
+                <!--This is Researcher Information Tab -->
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ProjectId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ProjectName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Approved)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ApprovedDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ApprovedBy)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StartDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EndDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsPublished)
+                        </th>
+                        <th>
+                            Action
+                        </th>
+
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProjectId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProjectName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @*@Html.DisplayFor(modelItem => item.Approved)*@
+
+                                @(item.Approved ? "Yes" : "No")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ApprovedDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ApprovedBy)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndDate)
+                            </td>
+                            <td>
+                                @*@Html.DisplayFor(modelItem => item.IsPublished)*@
+                                @(item.IsPublished ? "Yes" : "No")
+
+                            </td>
+                            @*<td>
+                        @Html.ActionLink("Approve", "Edit", new { id=item.ProjectId  }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.ProjectId }) |
+                    </td>*@
+
+                            <td>
+                                @{
+                                    List<SelectListItem> listItems = new List<SelectListItem>();
+                                    listItems.Add(new SelectListItem
+                                    {
+                                        Text = "-- Select --",
+                                        Value = "",
+                                        Selected = true
+                                    });
+                                    listItems.Add(new SelectListItem
+                                    {
+                                        Text = "Approved",
+                                        Value = "Approved"
+                                    });
+                                    listItems.Add(new SelectListItem
+                                    {
+                                        Text = "Deny",
+                                        Value = "Deny",
+                                    });
+                                    listItems.Add(new SelectListItem
+                                    {
+                                        Text = "Request for Info",
+                                        Value = "NeedMoreInfo"
+                                    });
+                                }
+
+                                @Html.DropDownListFor(modelItem => item.Status, listItems, new { Class = "ddlStyle", onchange = "SelectedIndexChanged()" })
+                            </td>
+
+                            <td>
+                                <input type="button" value="Send Notification" onclick="location.href='@Url.Action("Index","Notify")'" />
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+
+
+
+
+
+            </div>
+            </div>
+    </div>
+</div>
